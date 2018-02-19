@@ -32,12 +32,21 @@ body {
   font: 16px/26px "Raleway", sans-serif; }
 
 .form-wrap {
-  background-color: #fff;
-  width: 320px;
-  margin: 3em auto;
-  box-shadow: 0px 1px 8px #BEBEBE;
-  -webkit-box-shadow: 0px 1px 8px #BEBEBE;
-  -moz-box-shadow: 0px 1px 8px #BEBEBE; }
+    background-color: #fff;
+    width: 420px;
+    margin: 3em auto;
+    box-shadow: 0px 1px 8px #BEBEBE;
+    -webkit-box-shadow: 0px 1px 8px #BEBEBE;
+    -moz-box-shadow: 0px 1px 8px #BEBEBE; 
+}
+
+    @media only screen and (max-width: 600px) {
+        .form-wrap {
+            
+            width: 320px;
+        }
+    }
+
   .form-wrap .tabs {
     overflow: hidden; }
     .form-wrap .tabs h3 {
@@ -133,7 +142,7 @@ body {
 
 <body>
     <br>
-    <br><br>
+    
     
     <div class="form-wrap">
       
@@ -143,16 +152,20 @@ body {
 		</div><!--.tabs-->
 
 		<div class="tabs-content">
+            <span style="color: red; margin-bottom: 50px; text-align: center;">{{registered}}</span>
+            <br>
 			<div id="signup-tab-content" class="active">
-				<form class="signup-form" action="" method="post">
-					<input type="email" class="input" id="user_email" autocomplete="off" placeholder="Email">
-					<input type="text" class="input" id="user_name" autocomplete="off" placeholder="Username">
-					<input type="password" class="input" id="user_pass" autocomplete="off" placeholder="Password">
+				<form class="signup-form" action="/signup" method="POST">
+                    <input type="text" class="input" id="name" name="name" autocomplete="off" placeholder="Name">
+					<input type="email" class="input" id="email" name="email" autocomplete="off" placeholder="Email">
+					<input type="text" class="input" id="username" name="username" autocomplete="off" placeholder="Username">
+					<input type="password" class="input" id="password" name="password" autocomplete="off" placeholder="Password">
+                    <input type="password" class="input" id="key" name="key" autocomplete="off" placeholder="Your Secret Key">
 					<input type="submit" class="button" value="Sign Up">
 				</form><!--.login-form-->
 				<div class="help-text">
-					<p>By signing up, you agree to our</p>
-					<p><a href="#">Terms of service</a></p>
+					{{!-- <p>By signing up, you agree to our</p>
+					<p><a href="#">Terms of service</a></p> --}}
 				</div><!--.help-text-->
 			</div><!--.signup-tab-content-->
 

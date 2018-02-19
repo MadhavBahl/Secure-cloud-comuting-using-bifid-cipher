@@ -12,12 +12,20 @@ app.set('views', __dirname + '/public');
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'hbs');
 
-app.get('/', (req,res) => {
+app.get('/', (req, res) => {
     res.render('index.hbs');
+});
+
+app.get('/signup', (req, res) => {
+    res.render('login.hbs');
 });
 
 app.get('/login', (req, res) => {
     res.render('login.hbs');
+});
+
+app.post('/signup', (req, res) => {
+    res.render('login.hbs', {registered: 'Check your email!'})
 });
 
 app.listen (port, () => {
