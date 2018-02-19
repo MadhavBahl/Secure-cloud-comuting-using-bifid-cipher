@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
 
+const key = [ [ 'X', 'A', 'P', 'U', 'F'], ['N', 'C', 'G', 'Y', 'K'], ['I', 'Z', 'E', 'O', 'M'], ['B', 'L', 'W', 'V', 'R'], ['D', 'H', 'Q', 'T', 'S']];
+
 const port = process.env.PORT || 8000;
 
 var app = express();
