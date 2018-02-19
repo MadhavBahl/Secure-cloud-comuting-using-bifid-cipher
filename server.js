@@ -2,7 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
 
-const key = [ [ 'X', 'A', 'P', 'U', 'F'], ['N', 'C', 'G', 'Y', 'K'], ['I', 'Z', 'E', 'O', 'M'], ['B', 'L', 'W', 'V', 'R'], ['D', 'H', 'Q', 'T', 'S']];
+const {signUpMail} = require('./serverFiles/signUpMail');
+
+// const key = [ [ 'X', 'A', 'P', 'U', 'F'], ['N', 'C', 'G', 'Y', 'K'], ['I', 'Z', 'E', 'O', 'M'], ['B', 'L', 'W', 'V', 'R'], ['D', 'H', 'Q', 'T', 'S']];
+const key = "TeamBifid"
 
 const port = process.env.PORT || 8000;
 
@@ -25,7 +28,21 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
-    res.render('login.hbs', {registered: 'Check your email!'})
+    var details = {
+        name: req.body.name,
+        email: req.body.email,
+        username: req.body.username,
+        key: req.body.key,
+        pass: req.body.password
+    };
+    signUpMail(details,(err,info) => {
+        if (err) {
+            console.log(err);
+            return res.render('login.hbs', {registered: 'There was some error!'});
+        }
+        res.render('login.hbs', {registered: 'Check your email!'});
+    });
+    
 });
 
 app.listen (port, () => {
