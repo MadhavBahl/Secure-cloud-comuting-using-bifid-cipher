@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const hbs = require('hbs');
 
 const {signUpMail} = require('./serverFiles/signUpMail');
+const {hash} = require('./serverFiles/g_hash');
 
 // const key = [ [ 'X', 'A', 'P', 'U', 'F'], ['N', 'C', 'G', 'Y', 'K'], ['I', 'Z', 'E', 'O', 'M'], ['B', 'L', 'W', 'V', 'R'], ['D', 'H', 'Q', 'T', 'S']];
 const key = "TeamBifid"
@@ -35,12 +36,13 @@ app.post('/signup', (req, res) => {
         key: req.body.key,
         pass: req.body.password
     };
+    let newPass = hash(req.body.password);
     signUpMail(details,(err,info) => {
-        if (err) {
-            console.log(err);
-            return res.render('login.hbs', {registered: 'There was some error!'});
-        }
-        res.render('login.hbs', {registered: 'Check your email!'});
+        // if (err) {
+        //     console.log(err);
+        //     return res.render('login.hbs', {registered: 'There was some error!'});
+        // }
+        res.render('login.hbs', {registered: `Hashed Password: ${newPass}`});
     });
     
 });
