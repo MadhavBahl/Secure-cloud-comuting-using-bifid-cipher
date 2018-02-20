@@ -1,4 +1,4 @@
-# Dataflow
+## Dataflow
 
 This document shows the dataflow in our project
 
@@ -27,7 +27,7 @@ hash function   -->   Gallant-56
 > Gallant Hash is not an existing hash, it is a catchy name that we are giving to our hash function
 > output of hash function will be of 56 letters
 
-**lenght of password** = x  letters 
+**length of password** = x letters
 
 **Delimiter** password[x+1] = '$'
 
