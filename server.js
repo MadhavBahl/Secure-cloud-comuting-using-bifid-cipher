@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
+var Promise = require("bluebird");
 
 const {signUpMail} = require('./serverFiles/signUpMail');
 const {hash} = require('./serverFiles/g_hash');
+const {addUser} = require('./serverFiles/addUser');
 
 // const key = [ [ 'X', 'A', 'P', 'U', 'F'], ['N', 'C', 'G', 'Y', 'K'], ['I', 'Z', 'E', 'O', 'M'], ['B', 'L', 'W', 'V', 'R'], ['D', 'H', 'Q', 'T', 'S']];
 const key = "TeamBifid"
@@ -29,6 +31,8 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/signup', (req, res) => {
+    
+    // Set up an object to send mail
     var details = {
         name: req.body.name,
         email: req.body.email,
@@ -36,14 +40,29 @@ app.post('/signup', (req, res) => {
         key: req.body.key,
         pass: req.body.password
     };
+
+    // Hash the password
     let newPass = hash(req.body.password);
-    signUpMail(details,(err,info) => {
-        // if (err) {
-        //     console.log(err);
-        //     return res.render('login.hbs', {registered: 'There was some error!'});
-        // }
-        res.render('login.hbs', {registered: `Hashed Password: ${newPass}`});
+    let newKey = hash(req.body.key);
+    req.body.password = newPass;
+    req.body.key = newKey;
+    
+    // Save to the database
+    addUser(req.body, (err, result) => {
+        if (err) {
+            console.log(err);
+            return res.render('login.hbs', {registered: 'There was some error!'});
+        }
+        // Send a mail to confirm signup
+        signUpMail(details,(err,info) => {
+            if (err) {
+                console.log(err);
+                return res.render('login.hbs', {registered: 'There was some error!'});
+            }
+            res.render('login.hbs', {registered: `Hashed Password: ${newPass}`});
+        });
     });
+
     
 });
 

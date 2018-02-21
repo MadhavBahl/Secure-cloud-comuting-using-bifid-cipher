@@ -17,9 +17,11 @@
   },
   "homepage": "https://github.com/MadhavBahlMD/Secure-cloud-comuting-using-bifid-cipher#readme",
   "dependencies": {
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "hbs": "^4.0.1",
+    "mongoose": "^5.0.6",
     "nodemailer": "^4.4.2"
   }
 }

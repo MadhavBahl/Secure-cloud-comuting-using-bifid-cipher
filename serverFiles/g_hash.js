@@ -22,9 +22,9 @@ const hash = (pass) => {
         14: 'e',
         15: 's'
     }
-
+    
     for (let i=0; i<n;i++) {
-        let temp = Math.pow((i+x), 3);
+        let temp = Math.pow((2*i + x), 3);
         temp /= 2;
         temp = Math.floor(temp);
         passArr = passArr.concat(hashTable[temp%16]);
