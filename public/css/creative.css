@@ -310,3 +310,15 @@ header.masthead p {
 .btn-primary:active, .btn-primary:focus {
   box-shadow: 0 0 0 0.2rem rgba(240, 95, 64, 0.5) !important;
 }
+
+@media only screen and (min-width: 600px) {
+    #mobile30 {
+        margin-left: 25%;
+    }
+}
+
+#footer {
+    background-color: #212529;
+    color: white;
+    padding: 16px;
+}

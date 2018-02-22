@@ -27,7 +27,7 @@ trade-offs.">
     <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/creative.min.css" rel="stylesheet">
+    <link href="css/creative.css" rel="stylesheet">
 
   </head>
 
@@ -251,7 +251,23 @@ trade-offs.">
           </div>
         </div>
         <div class="row">
-
+            <form action="/sendMail" style="width: 100%;" method="POST">
+                <div id="mobile30" class="text-center col-xs-12 col-sm-6 ">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="name" name="name" class="form-control" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email address:</label>
+                        <input type="email" name="email" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message:</label>
+                        <textarea class="form-control" name="message" rows="5" id="message"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </div>
+            </form>
 
           {{!-- <div class="col-lg-4 ml-auto text-center">
             <i class="fa fa-phone fa-3x mb-3 sr-contact"></i>
@@ -265,6 +281,14 @@ trade-offs.">
           </div> --}}
         </div>
       </div>
+    </section>
+
+    <section id="footer">
+        <div style="width: 100%;">
+            <div class="text-center">
+                <h5>Project made with love by Team Bifid</h5>
+            </div>
+        </div>
     </section>
 
     <!-- Bootstrap core JavaScript -->
