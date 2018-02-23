@@ -322,3 +322,10 @@ header.masthead p {
     color: white;
     padding: 16px;
 }
+
+#sendMailBTN {
+    padding-top: 10px;
+    padding-bottom: 10px; 
+    padding-left: 16px; 
+    padding-right: 16px; 
+}

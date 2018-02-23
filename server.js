@@ -6,8 +6,8 @@ var Promise = require("bluebird");
 const {signUpMail} = require('./serverFiles/signUpMail');
 const {hash} = require('./serverFiles/g_hash');
 const {addUser} = require('./serverFiles/addUser');
+const {sendMail} = require('./serverFiles/sendMail');
 
-// const key = [ [ 'X', 'A', 'P', 'U', 'F'], ['N', 'C', 'G', 'Y', 'K'], ['I', 'Z', 'E', 'O', 'M'], ['B', 'L', 'W', 'V', 'R'], ['D', 'H', 'Q', 'T', 'S']];
 const key = "TeamBifid"
 
 const port = process.env.PORT || 8000;
@@ -28,6 +28,11 @@ app.get('/signup', (req, res) => {
 
 app.get('/login', (req, res) => {
     res.render('login.hbs');
+});
+
+app.post('/sendMail', (req, res) => {
+    console.log(req.body);
+    res.send(req.body);
 });
 
 app.post('/signup', (req, res) => {
@@ -62,8 +67,6 @@ app.post('/signup', (req, res) => {
             res.render('login.hbs', {registered: `Hashed Password: ${newPass}`});
         });
     });
-
-    
 });
 
 app.listen (port, () => {
