@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
-var Promise = require("bluebird");
+const Promise = require("bluebird");
+
+const secretKey = 'ThisIsServerSecret';
 
 const {signUpMail} = require('./serverFiles/signUpMail');
 const {hash} = require('./serverFiles/g_hash');
@@ -47,12 +49,13 @@ app.post('/signup', (req, res) => {
     };
 
     // Hash the password
-    let newPass = hash(req.body.password);
-    let newKey = hash(req.body.key);
+    var newPass = hash(req.body.password, secretKey);
+    var newKey = hash(req.body.key, secretKey);
     req.body.password = newPass;
     req.body.key = newKey;
-    
+
     // Save to the database
+    
     addUser(req.body, (err, result) => {
         if (err) {
             console.log(err);
@@ -64,9 +67,10 @@ app.post('/signup', (req, res) => {
                 console.log(err);
                 return res.render('login.hbs', {registered: 'There was some error!'});
             }
-            res.render('login.hbs', {registered: `Hashed Password: ${newPass}`});
+            res.render('login.hbs', {registered: 'You are registered. Check your email!'});
         });
     });
+
 });
 
 app.listen (port, () => {

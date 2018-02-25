@@ -1,4 +1,6 @@
-const hash = (pass) => {
+const {encrypt} = require('./encrypt');
+
+function hash (pass, secretKey) {
     var passArr = pass.split('');
     var x = passArr.length; 
     var n = 56-(x+1);
@@ -31,8 +33,10 @@ const hash = (pass) => {
     }
 
     passArr = passArr.join('');
-    console.log(passArr);
-    return passArr;
+
+    crypted = encrypt(passArr, secretKey);
+    return crypted;
+
 }
 
 module.exports = {hash}
