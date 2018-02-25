@@ -1,4 +1,4 @@
-var key = "HelloWorld";
+var key = "ASDaslfknarqrppoj";
 key = key.toUpperCase();
 key = key.replace(/[^a-zA-Z ]/g, "");
 console.log(key);
@@ -76,4 +76,46 @@ for(let i=r; i<5;i++) {
     }
 }
 
+console.log('Polybus square is: ');
 console.log(square);
+
+// Read the input
+
+var ip = 'FleeAtOnce';
+ip = ip.toUpperCase();
+console.log(ip);
+
+var ipArr = ip.split('');
+var iplen = ipArr.length;
+
+// Convert Message to its coordinates
+
+console.log(ipArr);
+var xco = [];
+var yco = [];
+
+for(let i=0;i<ipArr.length;i++) {
+    for (let j=0;j<5;j++) {
+        for (let k=0;k<5;k++) {
+            if (ipArr[i] == square[j][k]) {
+                xco.push(j);
+                yco.push(k);
+                j=5;k=5;
+            }
+        }
+    }
+}
+
+xco = xco.concat(yco);
+
+console.log(xco);
+
+var encryptMes = [];
+
+for (let i=0; i<xco.length; i+=2) {
+    encryptMes.push(square[xco[i]][xco[i+1]]);
+}
+
+encryptMes = encryptMes.join('');
+
+console.log(encryptMes);
