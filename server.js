@@ -13,6 +13,7 @@ const {sendMail} = require('./serverFiles/sendMail');
 const {existingUser} = require('./serverFiles/findUser');
 const {existingUserName} = require('./serverFiles/existingUserName');
 const {checkToken} = require('./serverFiles/checkToken');
+const {deleteToken} = require('./serverFiles/deleteToken');
 
 const key = "TeamBifid"
 
@@ -125,16 +126,16 @@ app.post('/signup', (req, res) => {
     }); 
 });
 
+app.get('/login', (req, res) => {
+    res.render('login.hbs');
+});
+
 app.post('/login', (req, res) => {
 
 });
 
 app.get('/user/:me', (req, res) => {
-
-});
-
-app.get('/logout/:me', (req, res) => {
-    console.log('Logout requested from user: ',req.params.me);
+    console.log('Already Login from user: ',req.params.me);
     var username = req.params.me
     existingUserName(username, (err, result) => {
         if (err) {
@@ -146,8 +147,41 @@ app.get('/logout/:me', (req, res) => {
                 // if (err) {
                 //     res.render('login.hbs', {registered: 'There was some error!'});
                 // }
-                console.log('RESULT: ', result);
+                console.log('RESULT: ', doc);
                 if (doc) {
+                    res.render('user.hbs', {
+                        name: doc.name,
+                        username: doc.username,
+                        email: doc.email
+                    });
+                } else {
+                    res.render('login.hbs', {registered: 'You dont have an active session'});
+                }
+            });
+        } else {
+            res.render( 'login.hbs', {
+                registered: 'Are you sure you have signed up!?'
+            });
+        }
+    });
+});
+
+app.get('/logout/:me', (req, res) => {
+    console.log('Logout requested from user: ',req.params.me);
+    var username = req.params.me
+    existingUserName(username, (err, result) => {
+        if (err) {
+            res.render('login.hbs', {registered: 'There was some error!'});
+        }
+
+        if (result) {
+            deleteToken (result, (err, doc) => {
+                // if (err) {
+                //     res.render('login.hbs', {registered: 'There was some error!'});
+                // }
+                console.log('RESULT: ', doc);
+                if (doc) {
+                    console.log('LOGGED OUT!!!!');
                     res.render('logout.hbs', {
                         name: req.params.me
                     });
@@ -161,9 +195,6 @@ app.get('/logout/:me', (req, res) => {
             });
         }
     });
-    // deleteToken(username, (err, out) => {
-
-    // });
 });
 
 
