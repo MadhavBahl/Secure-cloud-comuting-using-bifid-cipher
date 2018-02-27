@@ -11,6 +11,7 @@ const {hash} = require('./serverFiles/g_hash');
 const {addUser} = require('./serverFiles/addUser');
 const {sendMail} = require('./serverFiles/sendMail');
 const {existingUser} = require('./serverFiles/findUser');
+const {existingUserName} = require('./serverFiles/existingUserName');
 
 const key = "TeamBifid"
 
@@ -29,8 +30,15 @@ app.set('view engine', 'hbs');
 app.get('/user', (req, res) => {
     res.render('user.hbs', {
         name: 'Madhav Bahl',
-        email: 'madhavbahl10@gmail.com'
+        email: 'madhavbahl10@gmail.com',
+        username: 'Madhav'
     });
+});
+
+app.get('/out/:me', (req, res) => {
+    res.render('logout.hbs', {
+        name: req.params.me
+    })
 });
 
 /* ===== End of user based temprary route ===== */
@@ -105,13 +113,42 @@ app.post('/signup', (req, res) => {
                         return res.render('login.hbs', {registered: 'There was some error!'});
                     }
                     // res.render('login.hbs', {registered: 'You are registered. Check your email!'});
-                    res.render('user.hbs');
+                    res.render('user.hbs', {
+                        name: details.name,
+                        email: details.email,
+                        username: details.username
+                    });
                 });
             });
         }
     }); 
+});
 
+app.post('/login', (req, res) => {
 
+});
+
+app.get('/user/:me', (req, res) => {
+
+});
+
+app.get('/logout/:me', (req, res) => {
+    console.log('Logout requested from user: ',req.params.me);
+    var username = req.params.me
+    existingUserName(username, (err, result) => {
+        if (err) {
+            res.send(err);
+        }
+
+        if (result) {
+            res.send(result);
+        } else {
+            res.redirect('/signup');
+        }
+    });
+    // deleteToken(username, (err, out) => {
+
+    // });
 });
 
 

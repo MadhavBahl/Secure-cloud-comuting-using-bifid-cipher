@@ -3,8 +3,8 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>Outdoors Template | Codrops</title>
-		<meta name="description" content="An implementation of Gil Huybrecht's Outdoors design" />
+		<title>Crypto | {{name}}</title>
+		<meta name="description" content="Bifid Crypt" />
 		<meta name="keywords" content="template, web design, html, javascript, layout, css, slide out" />
 		<meta name="author" content="Codrops" />
 		<link rel="shortcut icon" href="favicon.ico">
@@ -64,8 +64,11 @@
 				</header>
 				<!-- codrops links -->
 				<div class="codrops-links">
-					<a class="codrops-icon codrops-icon--prev" href="https://tympanus.net/Development/GradientTopographyAnimation/" title="Previous Demo"><svg class="icon icon--arrow"><use xlink:href="#icon-arrow"></use></svg></a>
-					<a class="codrops-icon codrops-icon--drop" href="https://tympanus.net/codrops/?p=33851" title="Back to the article"><svg class="icon icon--drop"><use xlink:href="#icon-drop"></use></svg></a>
+					{{!-- <a class="codrops-icon codrops-icon--prev" href="https://tympanus.net/Development/GradientTopographyAnimation/" title="Previous Demo"><svg class="icon icon--arrow"><use xlink:href="#icon-arrow"></use></svg></a> --}}
+					<form action="/logout/{{username}}" method="GET">
+						<button type="submit">Logout</button>
+					</form>
+					{{!-- <a class="codrops-icon codrops-icon--drop" href="https://tympanus.net/codrops/?p=33851" title="Back to the article"><svg class="icon icon--drop"><use xlink:href="#icon-drop"></use></svg></a> --}}
 				</div>
 				<!-- menu -->
 				<nav class="menu">

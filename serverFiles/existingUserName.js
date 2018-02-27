@@ -1,10 +1,8 @@
 const {mongoose} = require('./mongoose');
 const {User} = require('./userSchema');
 
-const existingUser = (user, callback) => {
-    console.log('Checking for the user');
-    console.log('Req.body is: ', user.email);
-    User.findOne({email: user.email}, (err, result) => {
+const existingUserName = (username, callback) => {
+    User.findOne({username: username}, (err, result) => {
         if (err) {
             callback(err);
         } else {
@@ -18,4 +16,4 @@ const existingUser = (user, callback) => {
     });
 };
 
-module.exports = {existingUser}
+module.exports = {existingUserName}
