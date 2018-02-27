@@ -21,6 +21,9 @@ var userSchema = new Schema({
     }, key: {
         type: String,
         required: true
+    }, tokens : {
+        type : [{}],
+        default : {}
     }
 });
 

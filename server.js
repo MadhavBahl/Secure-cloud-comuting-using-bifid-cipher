@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const hbs = require('hbs');
 const Promise = require("bluebird");
+const randomstring = require("randomstring");
 
 const secretKey = 'ThisIsServerSecret';
 
@@ -9,6 +10,7 @@ const {signUpMail} = require('./serverFiles/signUpMail');
 const {hash} = require('./serverFiles/g_hash');
 const {addUser} = require('./serverFiles/addUser');
 const {sendMail} = require('./serverFiles/sendMail');
+const {existingUser} = require('./serverFiles/findUser');
 
 const key = "TeamBifid"
 
@@ -19,6 +21,19 @@ app.use(bodyParser());
 app.set('views', __dirname + '/public');
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'hbs');
+
+/* =========================================== */
+/* ===== Temprary route for dev purposes ===== */
+/* =========================================== */
+
+app.get('/user', (req, res) => {
+    res.render('user.hbs', {
+        name: 'Madhav Bahl',
+        email: 'madhavbahl10@gmail.com'
+    });
+});
+
+/* ===== End of user based temprary route ===== */
 
 app.get('/', (req, res) => {
     res.render('index.hbs');
@@ -53,25 +68,53 @@ app.post('/signup', (req, res) => {
     var newKey = hash(req.body.key, secretKey);
     req.body.password = newPass;
     req.body.key = newKey;
-
-    // Save to the database
-    
-    addUser(req.body, (err, result) => {
-        if (err) {
-            console.log(err);
-            return res.render('login.hbs', {registered: 'There was some error!'});
-        }
-        // Send a mail to confirm signup
-        signUpMail(details,(err,info) => {
-            if (err) {
-                console.log(err);
-                return res.render('login.hbs', {registered: 'There was some error!'});
-            }
-            res.render('login.hbs', {registered: 'You are registered. Check your email!'});
-        });
+    var session = randomstring.generate({
+        length: 30,
+        charset: 'alphabetic'
     });
+    console.log(session);
+    var session = hash(session, secretKey);
+    var token = {};
+    token['token'] = session;
+    var tokens = [];
+    tokens.push(token);
+    // console.log(token);
+    console.log(tokens);
+    req.body['tokens'] = token;
+    
+    // Check is the entered user already exists in the Database
+    existingUser(req.body, (err, result) => {
+        if (err) {
+            return res.render('login.hbs', {registered: 'Could not connect to the database!'});
+        }
+
+        if (result) {
+            return res.render('login.hbs', {registered: 'Given User Already Exists. Please Check Again!'});
+        } else {
+            // Save to the database
+            addUser(req.body, (err, result) => {
+                if (err) {
+                    console.log(err);
+                    return res.render('login.hbs', {registered: 'There was some error!'});
+                }
+                
+                // Send a mail to confirm signup
+                signUpMail(details,(err,info) => {
+                    if (err) {
+                        console.log(err);
+                        return res.render('login.hbs', {registered: 'There was some error!'});
+                    }
+                    // res.render('login.hbs', {registered: 'You are registered. Check your email!'});
+                    res.render('user.hbs');
+                });
+            });
+        }
+    }); 
+
 
 });
+
+
 
 app.listen (port, () => {
     console.log(`Server is up on port ${port}`);
