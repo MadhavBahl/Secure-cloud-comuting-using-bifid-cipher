@@ -12,6 +12,7 @@ const {addUser} = require('./serverFiles/addUser');
 const {sendMail} = require('./serverFiles/sendMail');
 const {existingUser} = require('./serverFiles/findUser');
 const {existingUserName} = require('./serverFiles/existingUserName');
+const {checkToken} = require('./serverFiles/checkToken');
 
 const key = "TeamBifid"
 
@@ -38,7 +39,7 @@ app.get('/user', (req, res) => {
 app.get('/out/:me', (req, res) => {
     res.render('logout.hbs', {
         name: req.params.me
-    })
+    });
 });
 
 /* ===== End of user based temprary route ===== */
@@ -137,13 +138,27 @@ app.get('/logout/:me', (req, res) => {
     var username = req.params.me
     existingUserName(username, (err, result) => {
         if (err) {
-            res.send(err);
+            res.render('login.hbs', {registered: 'There was some error!'});
         }
 
         if (result) {
-            res.send(result);
+            checkToken (result, (err, doc) => {
+                // if (err) {
+                //     res.render('login.hbs', {registered: 'There was some error!'});
+                // }
+                console.log('RESULT: ', result);
+                if (doc) {
+                    res.render('logout.hbs', {
+                        name: req.params.me
+                    });
+                } else {
+                    res.render('login.hbs', {registered: 'You dont have an active session'});
+                }
+            });
         } else {
-            res.redirect('/signup');
+            res.render( 'login.hbs', {
+                registered: 'Are you sure you have signed up!?'
+            });
         }
     });
     // deleteToken(username, (err, out) => {
