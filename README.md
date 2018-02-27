@@ -1,17 +1,15 @@
 # [Bifid-Crypt](http://madhavbahl.ml)
 
 Secure storage and data-flow in cloud computing
-and IoT
+and IoT.
+
+[Open this website](https://madhavbahlmd.github.io/Secure-cloud-comuting-using-bifid-cipher/)
 
 Cyber Security J Component -- Implementation of bifid cipher in cloud computing
 
 ## Research Paper
 
 MATLAB-Based Software Tool for Implementation of Bifid Ciphers
-
-## See the workflow
-
-[Open this website](https://madhavbahlmd.github.io/Secure-cloud-comuting-using-bifid-cipher/)
 
 ## Abstract
 
@@ -45,6 +43,12 @@ hope our efforts in this project will be benefitial to society and
 public who have completely shifted their usage/storage/buisness to
 cloud computing.
 
+## Objective
+
+Cloud Storage is a service where data is remotely maintained, managed, and backed up. The service allows the users to store files online, so that they can access them from any location via the Internet. In recent days, almost everyone is moving towards cloud storage and cloud computing, According to a recent survey conducted with more than 800 business decision makers and users worldwide, the number of organizations gaining competitive advantage through high cloud adoption has almost doubled in the last few years and by 2017, the public cloud services market is predicted to exceed $244 billion. <br />
+People in their daily life use cloud storage for saving their private data. Hence, need for the data to be secured is much more than the same in case of local storage. There are concerns with the safety and privacy of important data stored remotely. Any compromise in data will automatically destroy the privacy, which is the fundamental right for human beings. <br />
+Invented by Felix Blessed Virgin Delastelle (1840 - 1902), though divided microorganism word [Ame05 Kah67] has never been used for any "serious applications, it's become among the foremost widespread passwords "Amateur" cryptographers.
+
 # Proceedure
 
 ## For Hash Function
@@ -75,14 +79,12 @@ sample key =
 
 **length of password** = x  letters 
 
-**Delimiter** password[x+1] = '$'
-
 **concatString** (n-letters) n=56-(x+1)
 
 **concatString**: i = [0, n-1]
 
 ```js
-concatString[i] = addStr [ (floor((((i*4)^2)/3)))%16 ];
+concatString[i] = addStr [ (floor((((i*2 + x)^3)/2)%16 ];
 password.concat(concat-string);
 ```
 
@@ -172,3 +174,17 @@ F L E E A T O N C E
 44 33 35 32 43 13 55 31 23 25
 U  A  E  O  L  W  R  I  N  S
 ```
+
+## Time Phase Analysis
+
+### Comparison between BIFID, AES, and DES
+
+![image](https://user-images.githubusercontent.com/26179770/36741333-d3f8b7b6-1c0a-11e8-8792-e861f4e044b0.png)
+
+### Comparison between DES and BIFID
+
+![image](https://user-images.githubusercontent.com/26179770/36741389-fab30e88-1c0a-11e8-8bf8-ba5f8b9562b0.png)
+
+### Comparison between AES and BIFID
+
+![image](https://user-images.githubusercontent.com/26179770/36741425-15d5011c-1c0b-11e8-8a80-41517acfcd5e.png)
