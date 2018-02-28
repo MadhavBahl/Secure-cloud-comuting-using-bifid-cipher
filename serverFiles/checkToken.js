@@ -24,8 +24,9 @@ const checkToken = (user, callback) => {
                 //     callback(undefined, res);
                 // });
 
-                var numTokens = reult.tokens.length;
-                if(numTokens > 1) {
+                var numTokens = result.tokens.length;
+                if(numTokens > 0) {
+
                     return callback(undefined, result);
                 }
                 

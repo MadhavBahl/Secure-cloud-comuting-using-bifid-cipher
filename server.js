@@ -15,6 +15,8 @@ const {existingUserName} = require('./serverFiles/existingUserName');
 const {checkToken} = require('./serverFiles/checkToken');
 const {deleteToken} = require('./serverFiles/deleteToken');
 const {checkPass} = require('./serverFiles/checkPass');
+const {saveSafeData} = require('./serverFiles/saveSafeData');
+const {encrypt} = require('./serverFiles/encrypt');
 
 const port = process.env.PORT || 8000;
 
@@ -32,7 +34,10 @@ app.get('/user', (req, res) => {
     res.render('user.hbs', {
         name: 'Madhav Bahl',
         email: 'madhavbahl10@gmail.com',
-        username: 'Madhav'
+        username: 'Madhav',
+        savedData: 'SJDWEIFUNWEDULUQWBDQWIWUIRWEFRIWEFNEFW',
+        decryptData: 'Hello World, doing some random stuff here'
+
     });
 });
 
@@ -117,7 +122,8 @@ app.post('/signup', (req, res) => {
                     res.render('user.hbs', {
                         name: details.name,
                         email: details.email,
-                        username: details.username
+                        username: details.username,
+                        savedData: details.safaData
                     });
                 });
             });
@@ -138,7 +144,8 @@ app.post('/login', (req, res) => {
         res.render('user.hbs', {
             name: response.name,
             email: response.email,
-            username: response.username
+            username: response.username,
+            savedData: response.safaData
         });
     })
 
@@ -159,10 +166,12 @@ app.get('/user/:me', (req, res) => {
                 // }
                 console.log('RESULT: ', doc);
                 if (doc) {
+                    console.log(doc);
                     res.render('user.hbs', {
                         name: doc.name,
                         username: doc.username,
-                        email: doc.email
+                        email: doc.email,
+                        savedData: doc.safaData
                     });
                 } else {
                     res.render('login.hbs', {registered: 'You dont have an active session'});
@@ -207,6 +216,35 @@ app.get('/logout/:me', (req, res) => {
     });
 });
 
+app.post('/saveData/:me', (req, res) => {
+    var username = req.params.me;
+    existingUserName(username, (err, result) => {
+        if (err) {
+            res.render('login.hbs', {registered: 'There was some error!'});
+        }
+
+        if (result) {
+            result.safeData = req.body.plainText;
+            saveSafeData(result, (err, output) => {
+                if (err) {
+                    res.render('login.hbs', {registered: 'There was some error!'});
+                }
+
+                res.render('user.hbs', {
+                    name: output.name,
+                    email: output.email,
+                    username: output.username,
+                    savedData: output.safeData
+                })
+            }); 
+
+        } else {
+            res.render( 'login.hbs', {
+                registered: 'Are you sure you have signed up!?'
+            });
+        }
+    });
+});
 
 
 app.listen (port, () => {
