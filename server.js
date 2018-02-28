@@ -14,8 +14,7 @@ const {existingUser} = require('./serverFiles/findUser');
 const {existingUserName} = require('./serverFiles/existingUserName');
 const {checkToken} = require('./serverFiles/checkToken');
 const {deleteToken} = require('./serverFiles/deleteToken');
-
-const key = "TeamBifid"
+const {checkPass} = require('./serverFiles/checkPass');
 
 const port = process.env.PORT || 8000;
 
@@ -126,11 +125,22 @@ app.post('/signup', (req, res) => {
     }); 
 });
 
-app.get('/login', (req, res) => {
-    res.render('login.hbs');
-});
-
 app.post('/login', (req, res) => {
+    console.log(req.body);
+    var newPass = hash(req.body.password, secretKey);
+    req.body.password = newPass;
+    console.log('New Password is: ', req.body.password);
+    checkPass(req.body, (err, response) => {
+        if (err) {
+            res.render('user.hbs', {registered: err});
+        }
+
+        res.render('user.hbs', {
+            name: response.name,
+            email: response.email,
+            username: response.username
+        });
+    })
 
 });
 
