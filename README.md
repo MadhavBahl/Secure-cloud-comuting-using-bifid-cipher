@@ -7,6 +7,11 @@ and IoT.
 
 Cyber Security J Component -- Implementation of bifid cipher in cloud computing
 
+## Steps to run
+
+1. npm install
+2. npm start
+
 ## Research Paper
 
 MATLAB-Based Software Tool for Implementation of Bifid Ciphers

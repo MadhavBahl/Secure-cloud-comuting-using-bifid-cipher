@@ -140,7 +140,7 @@ app.post('/login', (req, res) => {
         if (err) {
             res.render('user.hbs', {registered: err});
         }
-
+        console.log('The response is: ', response);
         res.render('user.hbs', {
             name: response.name,
             email: response.email,
